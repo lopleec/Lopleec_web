@@ -1,0 +1,47 @@
+{
+  "name": "Lopleec Personal Website",
+  "origin": "https://www.lopleec.com",
+  "type": "public-website",
+  "locales": [
+    "en",
+    "zh-cn"
+  ],
+  "routes": [
+    "/en",
+    "/en/about-me",
+    "/en/now",
+    "/en/fun",
+    "/en/projects",
+    "/en/skills",
+    "/en/award",
+    "/en/links",
+    "/zh-cn",
+    "/zh-cn/about-me",
+    "/zh-cn/now",
+    "/zh-cn/fun",
+    "/zh-cn/projects",
+    "/zh-cn/skills",
+    "/zh-cn/award",
+    "/zh-cn/links"
+  ],
+  "contact": {
+    "email": "me@lopleec.com"
+  },
+  "discovery": {
+    "apiCatalog": "https://www.lopleec.com/.well-known/api-catalog",
+    "authMarkdown": "https://www.lopleec.com/auth.md",
+    "mcpServerCard": "https://www.lopleec.com/.well-known/mcp/server-card.json",
+    "oauthAuthorizationServer": "https://www.lopleec.com/.well-known/oauth-authorization-server",
+    "oauthProtectedResource": "https://www.lopleec.com/.well-known/oauth-protected-resource",
+    "skillsIndex": "https://www.lopleec.com/.well-known/agent-skills/index.json"
+  },
+  "webmcp": {
+    "available": true,
+    "toolNames": [
+      "navigate-site-section",
+      "copy-contact-email",
+      "open-external-resource",
+      "get-site-context"
+    ]
+  }
+}

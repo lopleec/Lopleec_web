@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
+  "version": "1.0",
+  "protocolVersion": "2025-06-18",
+  "serverInfo": {
+    "name": "lopleec-webmcp",
+    "title": "Lopleec WebMCP Tools",
+    "version": "1.0.0"
+  },
+  "description": "Browser-exposed tools for navigating lopleec.com and opening Lopleec's public resources.",
+  "documentationUrl": "https://www.lopleec.com/auth.md",
+  "transport": {
+    "type": "webmcp",
+    "endpoint": "https://www.lopleec.com/"
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    }
+  },
+  "metadata": {
+    "origin": "https://www.lopleec.com",
+    "skillsIndex": "https://www.lopleec.com/.well-known/agent-skills/index.json"
+  }
+}

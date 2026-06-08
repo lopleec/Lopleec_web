@@ -1,0 +1,43 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.lopleec.com",
+      "service-desc": [
+        {
+          "href": "https://www.lopleec.com/.well-known/site-service.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://www.lopleec.com/auth.md",
+          "type": "text/markdown"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://www.lopleec.com/.well-known/agent-skills/index.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://www.lopleec.com/.well-known/mcp/server-card.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://www.lopleec.com/.well-known/oauth-protected-resource",
+          "type": "application/json"
+        },
+        {
+          "href": "https://www.lopleec.com/.well-known/oauth-authorization-server",
+          "type": "application/json"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://www.lopleec.com/.well-known/status.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

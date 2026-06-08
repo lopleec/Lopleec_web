@@ -1003,7 +1003,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .card-link-button-award::before {
-  display: none;
+  background: rgba(255, 255, 255, 0.26);
 }
 
 .card-link-button-award:hover,
@@ -2851,8 +2851,9 @@ body::-webkit-scrollbar-thumb {
   }
   .hero {
     width: 100vw;
-    min-height: max(100svh, 940px);
-    padding-bottom: 88px;
+    min-height: 100svh;
+    padding: 84px 20px 64px;
+    justify-content: center;
   }
   .texture-overlay {
     background-size: cover;
@@ -2911,8 +2912,10 @@ body::-webkit-scrollbar-thumb {
     font-size: 0.74rem;
   }
   .site-root:has(.language-prompt-card) .hero {
-    padding-top: 236px;
-    min-height: max(100svh, 980px);
+    padding-top: 224px;
+    padding-bottom: 72px;
+    min-height: max(100svh, 860px);
+    justify-content: flex-start;
   }
   .hero-title, .hero-title-main {
     font-size: 2.5rem;
@@ -2944,13 +2947,8 @@ body::-webkit-scrollbar-thumb {
     padding: 16px 18px 18px;
   }
   .projects-card {
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: 76px;
-    padding-right: 18px;
-  }
-  .projects-card {
     align-items: center;
+    justify-content: center;
     padding-left: 18px;
     padding-right: 18px;
   }

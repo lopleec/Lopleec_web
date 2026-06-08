@@ -1,0 +1,6 @@
+{
+  "status": "reserved",
+  "message": "Credential revocation is not publicly enabled because public website content does not currently require authentication.",
+  "contact": "me@lopleec.com",
+  "documentation": "https://www.lopleec.com/auth.md"
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "site-navigation",
+      "type": "skill-md",
+      "description": "Navigate the bilingual Lopleec personal website and choose the correct localized route.",
+      "url": "/.well-known/agent-skills/site-navigation/SKILL.md",
+      "digest": "sha256:5484e050166e86473d9d9efaebf2e6b57066ae0d6a8c7ca2cec02d238442427b"
+    },
+    {
+      "name": "site-resources",
+      "type": "skill-md",
+      "description": "Find projects, contact details, social links, and related Lopleec web properties.",
+      "url": "/.well-known/agent-skills/site-resources/SKILL.md",
+      "digest": "sha256:8dedd205c78df0dda57322f3ede231ce5f75205a10fa0f4339886429cbfa0ba1"
+    }
+  ]
+}

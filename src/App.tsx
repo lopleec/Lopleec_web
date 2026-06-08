@@ -11,6 +11,7 @@ import Hero from './components/Hero';
 import BentoGrid from './components/BentoGrid';
 import SettingsMenu from './components/SettingsMenu';
 import StartupLoader from './components/StartupLoader';
+import { registerWebMcpTools } from './webmcp';
 import {
   DEFAULT_LOCALE,
   SITE_COPY,
@@ -578,6 +579,10 @@ function App() {
           : '404 | Lopleec'
         : copy.pageTitles[routeKey];
   }, [copy.pageTitles, locale, routeKey]);
+
+  useEffect(() => {
+    registerWebMcpTools();
+  }, [locale, routeKey]);
 
   useEffect(() => {
     const handlePopState = () => {
