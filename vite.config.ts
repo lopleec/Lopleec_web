@@ -9,6 +9,8 @@ import {
   wantsMarkdown,
 } from './src/agent-ready';
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 const RESPONSE_TYPES: Record<string, string> = {
   '/.well-known/agent-skills/index.json': 'application/json; charset=utf-8',
   '/.well-known/api-catalog': `application/linkset+json; profile="${API_CATALOG_PROFILE}"`,
@@ -91,7 +93,7 @@ const createAgentReadyPlugin = (): Plugin => {
 };
 
 export default defineConfig({
-  plugins: [react(), createAgentReadyPlugin()],
+  plugins: [react(), createAgentReadyPlugin(), cloudflare()],
   build: {
     rollupOptions: {
       output: {
