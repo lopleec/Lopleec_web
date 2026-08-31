@@ -204,11 +204,14 @@ body::-webkit-scrollbar-thumb {
 }
 
 .startup-loader-brand {
+  max-width: calc(100vw - 40px);
   color: #ffffff;
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 4.8vw, 4.4rem);
+  font-size: clamp(1.1rem, 3.2vw, 3.4rem);
   font-weight: 700;
+  line-height: 1.15;
   letter-spacing: 0.05em;
+  text-wrap: balance;
   user-select: none;
 }
 

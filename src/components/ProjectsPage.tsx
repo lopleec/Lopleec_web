@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowUpRight, Branch, GithubFill, LinkChain, Star } from './AkarIcons';
 import type { Locale, ProjectCardCopy, SiteCopy } from '../content/site';
 
@@ -10,6 +10,7 @@ type GithubRepoStats = {
 
 const GITHUB_STATS_CACHE_KEY = 'lopleec-project-stats-v1';
 const GITHUB_STATS_MAX_AGE_MS = 1000 * 60 * 30;
+const GITHUB_STATS_TIMEOUT_MS = 8000;
 
 const formatCompactNumber = (value: number, locale: Locale) =>
   new Intl.NumberFormat(locale === 'zh-cn' ? 'zh-CN' : 'en', {
@@ -73,26 +74,40 @@ export default function ProjectsPage({
   const [statsByRepo, setStatsByRepo] = useState<Record<string, GithubRepoStats>>(() =>
     typeof window === 'undefined' ? {} : readCachedStats() ?? {},
   );
+  const [unavailableRepos, setUnavailableRepos] = useState<Set<string>>(() => new Set());
+  const requestedReposRef = useRef(new Set<string>());
 
   useEffect(() => {
+    const requestedRepos = requestedReposRef.current;
     const repos = Array.from(
       new Set(copy.items.map((item) => item.githubRepo).filter((repo): repo is string => Boolean(repo))),
     );
 
     if (repos.length === 0) return undefined;
 
-    const missingRepos = repos.filter((repo) => !statsByRepo[repo]);
+    const missingRepos = repos.filter(
+      (repo) =>
+        !statsByRepo[repo] &&
+        !unavailableRepos.has(repo) &&
+        !requestedRepos.has(repo),
+    );
 
     if (missingRepos.length === 0) {
       return undefined;
     }
 
+    missingRepos.forEach((repo) => requestedRepos.add(repo));
+
     let cancelled = false;
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), GITHUB_STATS_TIMEOUT_MS);
 
     const loadStats = async () => {
       const results = await Promise.allSettled(
         missingRepos.map(async (repo) => {
-          const response = await fetch(`https://api.github.com/repos/${repo}`);
+          const response = await fetch(`https://api.github.com/repos/${repo}`, {
+            signal: controller.signal,
+          });
           if (!response.ok) {
             throw new Error(`Failed to fetch ${repo}`);
           }
@@ -116,25 +131,49 @@ export default function ProjectsPage({
 
       if (cancelled) return;
 
-      const nextStats = { ...statsByRepo };
+      setUnavailableRepos((currentRepos) => {
+        const rejectedRepos = results.flatMap((result, index) =>
+          result.status === 'rejected' ? [missingRepos[index]] : [],
+        );
 
-      results.forEach((result) => {
-        if (result.status === 'fulfilled') {
-          const [repo, values] = result.value;
-          nextStats[repo] = values;
-        }
+        if (rejectedRepos.length === 0) return currentRepos;
+
+        const nextRepos = new Set(currentRepos);
+
+        rejectedRepos.forEach((repo) => {
+          nextRepos.add(repo);
+        });
+
+        return nextRepos;
       });
 
-      setStatsByRepo(nextStats);
-      writeCachedStats(nextStats);
+      setStatsByRepo((currentStats) => {
+        const successfulResults = results.flatMap((result) =>
+          result.status === 'fulfilled' ? [result.value] : [],
+        );
+
+        if (successfulResults.length === 0) return currentStats;
+
+        const nextStats = { ...currentStats };
+
+        successfulResults.forEach(([repo, values]) => {
+          nextStats[repo] = values;
+        });
+
+        writeCachedStats(nextStats);
+        return nextStats;
+      });
     };
 
     void loadStats();
 
     return () => {
       cancelled = true;
+      controller.abort();
+      window.clearTimeout(timeoutId);
+      missingRepos.forEach((repo) => requestedRepos.delete(repo));
     };
-  }, [copy.items, statsByRepo]);
+  }, [copy.items, statsByRepo, unavailableRepos]);
 
   return (
     <main className="learn-more-page projects-page">
@@ -164,6 +203,9 @@ export default function ProjectsPage({
               locale={locale}
               project={project}
               stats={project.githubRepo ? statsByRepo[project.githubRepo] : undefined}
+              statsUnavailable={
+                project.githubRepo ? unavailableRepos.has(project.githubRepo) : false
+              }
             />
           ))}
         </div>
@@ -176,11 +218,15 @@ function ProjectCard({
   locale,
   project,
   stats,
+  statsUnavailable,
 }: {
   locale: Locale;
   project: ProjectCardCopy;
   stats?: GithubRepoStats;
+  statsUnavailable: boolean;
 }) {
+  const statsPlaceholder = statsUnavailable ? 'N/A' : '...';
+
   return (
     <article className="project-entry-card">
       <header className="project-entry-head">
@@ -190,14 +236,14 @@ function ProjectCard({
           <div className="project-entry-stats" aria-label="Repository stats">
             <span className="project-entry-stat">
               <Star size={15} strokeWidth={1.9} />
-              <span>{stats ? formatCompactNumber(stats.stars, locale) : '...'}</span>
+              <span>{stats ? formatCompactNumber(stats.stars, locale) : statsPlaceholder}</span>
             </span>
             <span className="project-entry-stat project-entry-license">
-              <span>{stats ? stats.license : '...'}</span>
+              <span>{stats ? stats.license : statsPlaceholder}</span>
             </span>
             <span className="project-entry-stat">
               <Branch size={15} strokeWidth={1.9} />
-              <span>{stats ? formatCompactNumber(stats.forks, locale) : '...'}</span>
+              <span>{stats ? formatCompactNumber(stats.forks, locale) : statsPlaceholder}</span>
             </span>
           </div>
         ) : null}

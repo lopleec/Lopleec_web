@@ -1,5 +1,7 @@
 export const LOCALES = ['en', 'zh-cn'] as const;
 
+export const SITE_TITLE = 'Lopleec Personal Web / Lopleec个人网站';
+
 export type Locale = (typeof LOCALES)[number];
 export type ContrastMode = 'standard' | 'high';
 export type RouteKey =
@@ -358,6 +360,7 @@ export const SITE_COPY: Record<Locale, SiteCopy> = {
     },
     nowPage: {
       items: [
+        'TRAIN MODELS',
         'MAKE MUSIC',
         'DEV GAMES',
         'CHAT',
@@ -369,6 +372,48 @@ export const SITE_COPY: Record<Locale, SiteCopy> = {
     projectsPage: {
       title: 'PROJECT',
       items: [
+        {
+          name: 'Gepo-MCSkin-Pixel-EDM',
+          githubRepo: 'lopleec/Gepo-MCSkin-Pixel-EDM',
+          description:
+            'Gepo is a 217.8M-parameter pixel-space EDM with UV-aware conditioning (a text-conditioned pixel-space diffusion model) that generates native 64×64 RGBA Minecraft skins from English text.',
+          links: [
+            {
+              href: 'https://github.com/lopleec/Gepo-MCSkin-Pixel-EDM',
+              label: 'GitHub',
+              type: 'github',
+            },
+            {
+              href: 'https://huggingface.co/Lopleec/Gepo-MCSkin-Pixel-EDM',
+              label: 'Hugging Face',
+              type: 'external',
+            },
+          ],
+        },
+        {
+          name: 'Kotj',
+          githubRepo: 'lopleec/Kotj',
+          description: 'A clean note-taking app with a native Android UI.',
+          links: [
+            {
+              href: 'https://github.com/lopleec/Kotj',
+              label: 'GitHub',
+              type: 'github',
+            },
+          ],
+        },
+        {
+          name: 'Pixel-Water-Mark',
+          githubRepo: 'lopleec/Pixel-Water-Mark',
+          description: 'An app for adding photo watermarks for Pixel devices.',
+          links: [
+            {
+              href: 'https://github.com/lopleec/Pixel-Water-Mark',
+              label: 'GitHub',
+              type: 'github',
+            },
+          ],
+        },
         {
           name: 'Swift Craft Launcher',
           githubRepo: 'suhang12332/Swift-Craft-Launcher',
@@ -823,6 +868,7 @@ export const SITE_COPY: Record<Locale, SiteCopy> = {
     },
     nowPage: {
       items: [
+        '训练模型',
         '做音乐',
         '开发游戏',
         '聊天',
@@ -834,6 +880,48 @@ export const SITE_COPY: Record<Locale, SiteCopy> = {
     projectsPage: {
       title: '项目',
       items: [
+        {
+          name: 'Gepo-MCSkin-Pixel-EDM',
+          githubRepo: 'lopleec/Gepo-MCSkin-Pixel-EDM',
+          description:
+            'Gepo 是一个 2.178 亿参数的像素空间 EDM，并结合 UV 感知条件（文本条件像素空间扩散模型），可从英文文本生成原生 64×64 RGBA Minecraft 皮肤。',
+          links: [
+            {
+              href: 'https://github.com/lopleec/Gepo-MCSkin-Pixel-EDM',
+              label: 'GitHub',
+              type: 'github',
+            },
+            {
+              href: 'https://huggingface.co/Lopleec/Gepo-MCSkin-Pixel-EDM',
+              label: 'Hugging Face',
+              type: 'external',
+            },
+          ],
+        },
+        {
+          name: 'Kotj',
+          githubRepo: 'lopleec/Kotj',
+          description: '一款采用 Android 原生 UI 的简洁记事本软件。',
+          links: [
+            {
+              href: 'https://github.com/lopleec/Kotj',
+              label: 'GitHub',
+              type: 'github',
+            },
+          ],
+        },
+        {
+          name: 'Pixel-Water-Mark',
+          githubRepo: 'lopleec/Pixel-Water-Mark',
+          description: '一款为 Pixel 设备照片添加水印的软件。',
+          links: [
+            {
+              href: 'https://github.com/lopleec/Pixel-Water-Mark',
+              label: 'GitHub',
+              type: 'github',
+            },
+          ],
+        },
         {
           name: 'Swift Craft Launcher',
           githubRepo: 'suhang12332/Swift-Craft-Launcher',

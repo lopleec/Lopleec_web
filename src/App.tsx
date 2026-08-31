@@ -14,6 +14,7 @@ import StartupLoader from './components/StartupLoader';
 import { registerWebMcpTools } from './webmcp';
 import {
   DEFAULT_LOCALE,
+  SITE_TITLE,
   SITE_COPY,
   buildLocalizedPath,
   normalizePathname,
@@ -48,6 +49,7 @@ const NotFoundPage = lazy(loadNotFoundPage);
 const TRANSITION_EXPAND_MS = 420;
 const TRANSITION_CONTRACT_MS = 420;
 const LOADER_EXIT_MS = 280;
+const LOADER_PROGRESS_TIMEOUT_MS = 1500;
 
 type AdaptiveLoadingMode = 'aggressive' | 'preload' | 'lazy';
 export type MotionTier = 'high' | 'full' | 'reduced' | 'lite';
@@ -572,13 +574,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    document.title =
-      routeKey === 'not-found'
-        ? locale === 'zh-cn'
-          ? '页面未找到 | Lopleec'
-          : '404 | Lopleec'
-        : copy.pageTitles[routeKey];
-  }, [copy.pageTitles, locale, routeKey]);
+    document.title = SITE_TITLE;
+  }, []);
 
   useEffect(() => {
     registerWebMcpTools();
@@ -832,8 +829,16 @@ function App() {
       if (cancelled) return;
 
       setBootTarget(100);
-      await waitForVisibleProgress(99.4);
+      await Promise.race([
+        waitForVisibleProgress(99.4),
+        waitForMs(LOADER_PROGRESS_TIMEOUT_MS),
+      ]);
       if (cancelled) return;
+
+      if (bootProgressRef.current < 99.4) {
+        bootProgressRef.current = 100;
+        setBootProgress(100);
+      }
 
       await waitForMs(bootProfile.finalMs);
       if (cancelled) return;

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { Locale } from '../content/site';
+import { SITE_TITLE, type Locale } from '../content/site';
 import type { MotionTier } from '../App';
 
 export default function StartupLoader({
@@ -40,7 +40,7 @@ export default function StartupLoader({
   const circleDiameter = 108 + ((maxRadius * 2 - 108) * progress) / 100;
   const circleScale = circleDiameter / 108;
   const displayProgress = Math.round(progress);
-  const progressLabel = locale === 'zh-cn' ? 'Loding' : 'Loding';
+  const progressLabel = locale === 'zh-cn' ? '正在加载' : 'Loading';
 
   return (
     <div
@@ -56,7 +56,7 @@ export default function StartupLoader({
       />
 
       <div className="startup-loader-center">
-        <p className="startup-loader-brand">Lopleec.com</p>
+        <p className="startup-loader-brand">{SITE_TITLE}</p>
         <p className="startup-loader-progress">
           {progressLabel} <span className="startup-loader-progress-value">{displayProgress}%</span>
         </p>
