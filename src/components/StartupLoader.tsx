@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { SITE_TITLE, type Locale } from '../content/site';
+import type { Locale } from '../content/site';
 import type { MotionTier } from '../App';
 
 export default function StartupLoader({
@@ -56,7 +56,7 @@ export default function StartupLoader({
       />
 
       <div className="startup-loader-center">
-        <p className="startup-loader-brand">{SITE_TITLE}</p>
+        <p className="startup-loader-brand">Lopleec.com</p>
         <p className="startup-loader-progress">
           {progressLabel} <span className="startup-loader-progress-value">{displayProgress}%</span>
         </p>
